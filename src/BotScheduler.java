@@ -1,13 +1,6 @@
-import net.dv8tion.jda.api.events.GenericEvent;
-import net.dv8tion.jda.api.hooks.EventListener;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-public class BotScheduler implements EventListener
+public class BotScheduler extends ListenerAdapter 
 {
-	@Override
-	public void onEvent(GenericEvent event) 
-	{
-		// TODO: add scheduling
-		
-	}
 
 }
