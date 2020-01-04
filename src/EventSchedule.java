@@ -14,16 +14,17 @@ public class EventSchedule
 	public static void main(String[] args) throws Exception
 	{
 		ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+		final String databasePath = "/EventSchedule/database/eventData.db";
 		
 		// find and read the bot token from a text file
 		BufferedReader tokenReader = new BufferedReader(new FileReader("../EventSchedule/TOKEN.txt"));
-		final String BOT_TOKEN = tokenReader.readLine();
+		final String botToken = tokenReader.readLine();
 		tokenReader.close();
 		
 		// build the bot
-		JDA bot = new JDABuilder(BOT_TOKEN)
-				.addEventListeners(new BotCommands())
-				.addEventListeners(new BotScheduler())
+		JDA bot = new JDABuilder(botToken)
+				.addEventListeners(new BotCommands(databasePath))
+				.addEventListeners(new BotScheduler(databasePath))
 				.build().awaitReady();
 		
 		// set up the notification lambda
