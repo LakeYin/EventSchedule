@@ -5,6 +5,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -13,6 +15,9 @@ public class EventSchedule
 {
 	public static void main(String[] args) throws Exception
 	{
+		LogManager logManager = LogManager.getLogManager();
+		Logger logger = logManager.getLogger(Logger.GLOBAL_LOGGER_NAME);
+		
 		ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 		final String databasePath = "/EventSchedule/database/eventData.db";
 		
@@ -23,8 +28,8 @@ public class EventSchedule
 		
 		// build the bot
 		JDA bot = new JDABuilder(botToken)
-				.addEventListeners(new BotCommands(databasePath))
-				.addEventListeners(new BotScheduler(databasePath))
+				.addEventListeners(new BotCommands(databasePath, logger))
+				.addEventListeners(new BotScheduler(databasePath, logger))
 				.build().awaitReady();
 		
 		// set up the notification lambda

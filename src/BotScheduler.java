@@ -1,6 +1,7 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GenericGuildMessageReactionEvent;
@@ -11,12 +12,14 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 public class BotScheduler extends ListenerAdapter
 {
 	private Connection database;
+	private Logger logger;
 	
-	public BotScheduler(String databaseFilePath) throws Exception
+	public BotScheduler(String databaseFilePath, Logger logger) throws Exception
 	{
 		super();
 		Class.forName("org.sqlite.JDBC");
 		database = DriverManager.getConnection("jdbc:sqlite:" + databaseFilePath);
+		this.logger = logger;
 	}
 	
 	@Override
